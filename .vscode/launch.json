@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "musicbrainz_api",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "Dart Tests",
+            "program": "test",
+            "request": "launch",
+            "type": "dart"
+        }
+    ]
+}
