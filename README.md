@@ -1,2 +1,2 @@
 # musicbrainz_api
- Dart implementation of MusicBrainz API
+ Dart implementation of the MusicBrainz API
