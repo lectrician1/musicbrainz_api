@@ -2,6 +2,7 @@ library musicbrainz_api;
 
 import 'package:http/http.dart';
 import 'package:http/retry.dart';
+import 'dart:convert';
 
 /// Autheticatation class to use the MusicBrainz API.
 class Authentication {
@@ -41,12 +42,13 @@ class MusicBrainzApi {
       Uri.https('musicbrainz.org', '/ws/2' + path, parameters);
 
   /// Interface with the API
-  Future<Response> getApi(String path,
+  Future<Map> getApi(String path,
       [Map<String, String>? parameters]) async {
-    return await client.get(_url(path, parameters), headers: {
+    return jsonDecode((await client.get(_url(path, parameters), headers: {
       'User-Agent':
-          '${authentication.name}/${authentication.version} ( {$authentication.email} )'
-    });
+          '${authentication.name}/${authentication.version} ( {$authentication.email} )',
+      'Accept': 'application/json'
+    })).body);
   }
 
   // Future<Request> postApi() async {
@@ -54,11 +56,9 @@ class MusicBrainzApi {
   // }
 
   /// Get entity of a type.
-  Future<Response> getEntity(String entity, String mbdi) async {
-    return await getApi('/$entity/$mbdi');
-  }
+  Future<Map> getEntity(String entity, String mbdi) async => await getApi('/$entity/$mbdi');
 
-  // getArea(String mbdi) async => getEntity('', mbdi);
+  getArea(String mbdi) async => getEntity('', mbdi);
   // getArtist(String mbdi) async => getEntity('', mbdi);
   // getRecording(String mbdi) async => getEntity('', mbdi);
   // getRelease(String mbdi) async => getEntity('', mbdi);
